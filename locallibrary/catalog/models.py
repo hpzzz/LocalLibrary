@@ -17,16 +17,6 @@ class Genre(models.Model):
         return self.name
 
 
-class Language(models.Model):
-    """Model representing a Language (e.g. English, French, Japanese, etc.)"""
-    name = models.CharField(max_length=200,
-                            help_text="Enter the book's natural language (e.g. English, French, Japanese etc.)")
-
-    def __str__(self):
-        """String for representing the Model object (in Admin site etc.)"""
-        return self.name
-
-
 class Book(models.Model):
     """Model representing a book (but not a specific copy of a book)."""
     title = models.CharField(max_length=200)
@@ -40,7 +30,15 @@ class Book(models.Model):
     genre = models.ManyToManyField(Genre, help_text="Select a genre for this book")
     # ManyToManyField used because a genre can contain many books and a Book can cover many genres.
     # Genre class has already been defined so we can specify the object above.
-    language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True, blank=True)
+    language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True,)
+
+    def display_language(self):
+        # return ', '.join([language.name for language in self.language.all()[:3]])
+        return self.language
+
+    display_language.short_description = 'Language'
+
+
 
     def display_genre(self):
         """Creates a string for the Genre. This is required to display genre in Admin."""
@@ -97,9 +95,13 @@ class BookInstance(models.Model):
         ordering = ['due_back']
         permissions = (("can_mark_returned", "Set book as returned"),)
 
-    def __str__(self):
-        """String for representing the Model object."""
-        return '{0} ({1})'.format(self.id, self.book.title)
+        # def display_book(self):
+        # """Creates a string for the Genre. This is required to display genre in Admin."""
+        # return ', '.join([genre.name for genre in self.genre.all()[:3]])
+
+    # def __str__(self):
+    #     """String for representing the Model object."""
+    #     return '{0} ({1})'.format(self.id, self.book.title)
 
 
 class Author(models.Model):
@@ -119,4 +121,10 @@ class Author(models.Model):
     def __str__(self):
         """String for representing the Model object."""
         return f'{self.last_name}, ({self.first_name})'
+
+class Language(models.Model):
+    name = models.CharField(max_length=200, help_text="Enter book's natural language")
+
+    def __str__(self):
+        return self.name
 
