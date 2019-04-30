@@ -5,8 +5,16 @@ from catalog.models import Book, BookInstance, Author, Genre, Language
 #admin.site.register(Book)
 #admin.site.register(BookInstance)
 #admin.site.register(Author)
+
+
 admin.site.register(Genre)
 admin.site.register(Language)
+
+
+class BookInline(admin.TabularInline):
+    model = Book
+    extra = 0
+
 
 class AuthorAdmin(admin.ModelAdmin):
     """Administration object for Author models.
@@ -17,7 +25,9 @@ class AuthorAdmin(admin.ModelAdmin):
     """
     list_display = ('last_name', 'first_name', 'date_of_birth', 'date_of_death')
     fields = ['first_name', 'last_name', ('date_of_birth', 'date_of_death')]
+    inlines = [BookInline]
 admin.site.register(Author, AuthorAdmin)
+
 
 @admin.register(BookInstance)
 class BookInstanceAdmin(admin.ModelAdmin):
@@ -33,9 +43,12 @@ class BookInstanceAdmin(admin.ModelAdmin):
         }),
     )
 
+
 #Add associated records at the same time (Book and BookInstance)
 class BookInstanceInline(admin.TabularInline):
     model = BookInstance
+    extra = 0
+
 
 # Register the admin classes for Book using the decorator
 @admin.register(Book) # == admin.site.register()
@@ -43,5 +56,6 @@ class BookAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'display_genre', 'display_language') #cant use genre becouse it is a ManyToManyField, django prevents it
     inlines = [BookInstanceInline]
 # Register the admin classes for BookInstance using the decorator
+
 
 
