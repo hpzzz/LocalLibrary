@@ -70,6 +70,7 @@ class BookInstance(models.Model):
     due_back = models.DateField(null=True, blank=True)
     borrower = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
+    #Tell if a particular book instance is overdue
     @property
     def is_overdue(self):
         if self.due_back and date.today() > self.due_back:

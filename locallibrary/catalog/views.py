@@ -17,6 +17,7 @@ def index(request):
 
     num_genres = Genre.objects.count()
     num_books_word = Book.objects.filter(title__contains='the').count()
+
     # Number of visits to this view as counted in the session variable
     num_visits = request.session.get('num_visits', 0)
     request.session['num_visits'] = num_visits+1
@@ -64,3 +65,14 @@ class AuthorListView(generic.ListView):
 
 class AuthorDetailView(generic.DetailView):
     model = Author
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
+    """Generic class-based view listing books on loan to current user"""
+    model = BookInstance
+    template_name = 'catalog/bookinstance_list_borrowed_user.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')

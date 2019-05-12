@@ -39,7 +39,7 @@ class BookInstanceAdmin(admin.ModelAdmin):
             'fields': ('book', 'imprint', 'id')
         }),
         ('Availability', {
-            'fields': ('status', 'due_back')
+            'fields': ('status', 'due_back', 'borrower')
         }),
     )
 
@@ -56,6 +56,3 @@ class BookAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'display_genre', 'display_language') #cant use genre becouse it is a ManyToManyField, django prevents it
     inlines = [BookInstanceInline]
 # Register the admin classes for BookInstance using the decorator
-
-
-
