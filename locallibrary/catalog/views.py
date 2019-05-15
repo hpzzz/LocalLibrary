@@ -39,7 +39,7 @@ def index(request):
 
 class BookListView(generic.ListView):
     model = Book
-    paginate_by = 2 #reducing the number of items displayed on each page. 
+    paginate_by = 10 #reducing the number of items displayed on each page. 
 
 
     # context_object_name = 'my_book_list'   # your own name for the list as a template variable
@@ -62,7 +62,8 @@ class BookDetailView(generic.DetailView):
 
 class AuthorListView(generic.ListView):
     model = Author
-
+    paginate_by = 10
+    
 class AuthorDetailView(generic.DetailView):
     model = Author
 
