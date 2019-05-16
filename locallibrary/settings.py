@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&
 #DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['KHarasimsLocalLibrary.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = ['local-library-681.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
