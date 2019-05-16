@@ -5,3 +5,4 @@ venv
 # Database
 *.sqlite3
 .Python
+.vscode
