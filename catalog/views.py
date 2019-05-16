@@ -28,7 +28,6 @@ def index(request):
         'num_instances_available': num_instances_available,
         'num_authors': num_authors,
         'num_genres': num_genres,
-        'num_books_word': num_books_word,
     }
 
     # Render the HTML template index.html with the data in the context variable
